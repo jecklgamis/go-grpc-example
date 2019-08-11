@@ -7,7 +7,7 @@ import (
 )
 
 func String(str string) *string {
-	return &str;
+	return &str
 }
 
 var (
@@ -15,7 +15,8 @@ var (
 )
 
 func main() {
+	flag.Parse()
 	client := client.New(*serverAddr)
-	client.Put("some-key", uuid.New().String());
+	client.Put("some-key", uuid.New().String())
 	client.Get("some-key")
 }

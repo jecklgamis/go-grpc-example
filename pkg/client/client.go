@@ -10,13 +10,14 @@ import (
 )
 
 type SomeClient struct {
-	grpcClient pb.KeyValueStoreClient;
+	grpcClient pb.KeyValueStoreClient
 }
 
 func New(serverAddr string) *SomeClient {
 	flag.Parse()
 	var opts []grpc.DialOption
 	opts = append(opts, grpc.WithInsecure())
+	log.Println("Connecting to", serverAddr)
 	conn, err := grpc.Dial(serverAddr, opts...)
 	if err != nil {
 		log.Fatalf("Failed to dial: %v", err)
@@ -36,18 +37,18 @@ func (client *SomeClient) Get(key string) (string, error) {
 		return "", err
 	}
 	log.Printf("GET ok %v:%v", key, response.Value)
-	return response.Value, nil;
+	return response.Value, nil
 }
 
 func (client *SomeClient) Put(key string, value string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	kv := &pb.KeyValue{Key: &pb.Key{Key: key}, Value: &pb.Value{Value: value}};
+	kv := &pb.KeyValue{Key: &pb.Key{Key: key}, Value: &pb.Value{Value: value}}
 	_, err := client.grpcClient.Put(ctx, kv)
 	if err != nil {
 		log.Println("PUT failed with", err)
 		return err
 	}
 	log.Printf("PUT ok %v:%v", key, value)
-	return nil;
+	return nil
 }
