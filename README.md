@@ -1,6 +1,6 @@
 ## grpc-go-example
 
-This is an example GRPC client and server code. The server is a simple in-memory key-value store.
+This is an example GRPC client and server implementation. The server is a simple in-memory key-value store.
 
 
 
