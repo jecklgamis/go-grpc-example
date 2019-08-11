@@ -33,8 +33,6 @@ Example run:
 ```
 $ bin/server -port 4000
 2019/08/12 07:50:03 Started server on port 4000
-2019/08/12 07:50:19 PUT key=some-key, value=f887bf33-bff5-4568-9d6d-9a7b329169da
-2019/08/12 07:50:19 GET key=some-key, value=f887bf33-bff5-4568-9d6d-9a7b329169da
 ```
 
 Client:
