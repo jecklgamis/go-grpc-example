@@ -1,8 +1,16 @@
 ## grpc-go-example
 
-This is an example GRPC client and server. The server is a simple in-memory remote key-value store.
+This is an example GRPC client and server code. The server is a simple in-memory key-value store.
+
+
 
 ## Building
+Install `protoc-gen-go`:
+```
+go get -u github.com/golang/protobuf/protoc-gen-go
+```
+
+Generate stubs, client, and server implementations:
 ```
 make build
 ```
