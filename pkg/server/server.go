@@ -13,7 +13,7 @@ import pb "github.com/jecklgamis/grpc-go-example/pkg/kvstore"
 import "google.golang.org/grpc/status"
 
 type keyValueStoreServer struct {
-	store map[string]string;
+	store map[string]string
 }
 
 var server = &keyValueStoreServer{store: make(map[string]string)}
@@ -43,6 +43,8 @@ func Start(port int) {
 	pb.RegisterKeyValueStoreServer(grpcServer, server)
 	go func() {
 		log.Println("Started server on port", port)
-	}();
-	grpcServer.Serve(listener)
+	}()
+	if err = grpcServer.Serve(listener); err != nil {
+		log.Fatalf("Unable to start server: %v", err)
+	}
 }
