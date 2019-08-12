@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	port           = flag.Int("port", 4000, "The gateway port")
+	port           = flag.Int("port", 8080, "The gateway port")
 	grpcServerAddr = flag.String("grpcServerAddr", "localhost:4000", "The server port")
 )
 
