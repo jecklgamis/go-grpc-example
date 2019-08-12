@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"flag"
 	"fmt"
 	pb "github.com/jecklgamis/grpc-go-example/pkg/kvstore"
 	"google.golang.org/grpc"
@@ -38,7 +37,6 @@ func (server *keyValueStoreServer) Put(ctx context.Context, kv *pb.KeyValue) (*p
 }
 
 func Start(port int) {
-	flag.Parse()
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
