@@ -23,7 +23,7 @@ go get -u github.com/golang/protobuf/protoc-gen-go
 go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
 go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 ```
-or simple do `make get-protoc-gen-go`
+or simply do `make get-protoc-gen-go`
 
 Generate stub and build client, server, and gateway implementations:
 ```
