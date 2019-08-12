@@ -33,9 +33,9 @@ make build
 Example run:
 ```
 $ make build
-protoc --go_out=plugins=grpc:. pkg/kvstore/kvstore.proto
 go build -o bin/client cmd/client/client.go
 go build -o bin/server cmd/server/server.go
+go build -o bin/gateway cmd/gateway/gateway.go
 ```
 
 ## Running 
