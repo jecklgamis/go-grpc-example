@@ -6,9 +6,23 @@ build: protos client server
 
 .PHONY: protos
 protos:
-	protoc --go_out=plugins=grpc:. pkg/kvstore/kvstore.proto
+	protoc -I. \
+	-I/usr/local/include \
+	-I/usr/local/include/google/protobuf \
+	-I$(GOPATH)/src \
+	-I$(GOPATH)/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+	--go_out=plugins=grpc:. pkg/kvstore/kvstore.proto
+
+	protoc -I. \
+	-I/usr/local/include \
+	-I/usr/local/include/google/protobuf \
+	-I$(GOPATH)/src \
+	-I$(GOPATH)/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+	--grpc-gateway_out=logtostderr=true,grpc_api_configuration=pkg/kvstore/kvstore.yaml:. pkg/kvstore/kvstore.proto
 
 get-protoc-gen-go:
+	go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
+	go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 	go get -u github.com/golang/protobuf/protoc-gen-go
 
 .PHONY: server

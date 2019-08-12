@@ -43,7 +43,7 @@ func (client *SomeClient) Get(key string) (string, error) {
 func (client *SomeClient) Put(key string, value string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	kv := &pb.KeyValue{Key: &pb.Key{Key: key}, Value: &pb.Value{Value: value}}
+	kv := &pb.KeyValue{Key: key, Value: value}
 	_, err := client.grpcClient.Put(ctx, kv)
 	if err != nil {
 		log.Println("PUT failed with", err)

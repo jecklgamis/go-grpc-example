@@ -1,0 +1,10 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+    - selector: kvstore.KeyValueStore.Get
+      get: /v1
+    - selector: kvstore.KeyValueStore.Put
+      put: /v1
+      body: "*"

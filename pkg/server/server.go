@@ -4,13 +4,13 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	pb "github.com/jecklgamis/grpc-go-example/pkg/kvstore"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"log"
 	"net"
 )
-import pb "github.com/jecklgamis/grpc-go-example/pkg/kvstore"
-import "google.golang.org/grpc/status"
 
 type keyValueStoreServer struct {
 	store map[string]string
@@ -28,8 +28,12 @@ func (server *keyValueStoreServer) Get(ctx context.Context, key *pb.Key) (*pb.Va
 }
 
 func (server *keyValueStoreServer) Put(ctx context.Context, kv *pb.KeyValue) (*pb.Empty, error) {
-	log.Printf("PUT key=%v, value=%v\n", kv.Key.Key, kv.Value.Value)
-	server.store[kv.Key.Key] = kv.Value.Value
+	if kv == nil {
+		log.Printf("kv is nil")
+		return &pb.Empty{}, nil
+	}
+	log.Printf("PUT key=%v, value=%v\n", kv.Key, kv.Value)
+	server.store[kv.Key] = kv.Value
 	return &pb.Empty{}, nil
 }
 
@@ -41,9 +45,7 @@ func Start(port int) {
 	}
 	grpcServer := grpc.NewServer()
 	pb.RegisterKeyValueStoreServer(grpcServer, server)
-	go func() {
-		log.Println("Started server on port", port)
-	}()
+	log.Println("Started server on port", port)
 	if err = grpcServer.Serve(listener); err != nil {
 		log.Fatalf("Unable to start server: %v", err)
 	}

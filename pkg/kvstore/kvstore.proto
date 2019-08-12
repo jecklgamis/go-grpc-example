@@ -10,8 +10,8 @@ message Value {
 }
 
 message KeyValue {
-    Key key = 1;
-    Value value = 2;
+    string key = 1;
+    string value = 2;
 }
 
 message Error {
@@ -23,8 +23,8 @@ message Empty {
 
 
 service KeyValueStore {
-    rpc get (Key) returns (Value) {
+    rpc Get (Key) returns (Value) {
     }
-    rpc put (KeyValue) returns (Empty) {
+    rpc Put (KeyValue) returns (Empty) {
     }
 }
