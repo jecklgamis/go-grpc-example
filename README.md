@@ -46,9 +46,9 @@ $ bin/server -port 4000 -gatewayPort 8080
 
 Example run:
 ```
-$ bin/server -port 4000
-2019/08/13 07:26:01 Started server on port 4000
-2019/08/13 07:26:04 Starting gateway on port 8080
+$ bin/server -port 4000 -gatewayPort 8080
+2019/08/13 07:30:24 Started server on port 4000
+2019/08/13 07:30:27 Started gateway on port 8080
 ```
 
 Client:
@@ -63,6 +63,7 @@ bin/client -serverAddr localhost:4000
 2019/08/12 07:50:19 PUT ok some-key:f887bf33-bff5-4568-9d6d-9a7b329169da
 2019/08/12 07:50:19 GET ok some-key:f887bf33-bff5-4568-9d6d-9a7b329169da
 ```
+
 ## Testing The REST EndPoints
 
 ```
