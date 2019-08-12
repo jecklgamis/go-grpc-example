@@ -11,7 +11,7 @@ Mac OS X:
 brew install protobuf
 ```
 
-Ensure version is 3.0.0 or above
+Ensure version is 3.0.0 or above:
 ```
 $ protoc --version
 libprotoc 3.7.1
@@ -41,14 +41,23 @@ go build -o bin/server cmd/server/server.go
 ## Running 
 Server:
 ```
-$ bin/server -port 4000 -gatewayPort 8080
+$ bin/server -port 4000
 ```
 
-Example run:
+Example output:
 ```
-$ bin/server -port 4000 -gatewayPort 8080
+$ bin/server -port 4000
 2019/08/13 07:30:24 Started server on port 4000
-2019/08/13 07:30:27 Started gateway on port 8080
+```
+
+Gateway:
+```
+$ bin/gateway -port 8080 -grpcServerAddr localhost:4000
+```
+Example output:
+```
+2019/08/13 08:27:25 Using gRPC server on localhost:4000
+2019/08/13 08:27:25 Started gateway on port 8080
 ```
 
 Client:
@@ -68,7 +77,7 @@ bin/client -serverAddr localhost:4000
 
 ```
 curl -v -X PUT  http://localhost:8080/v1 -d@request_body.json
-curl -v -X GET  http://localhost:8080/v1?key=some-key
+curl -v  http://localhost:8080/v1?key=some-key
 ```
 
 request_body.json:

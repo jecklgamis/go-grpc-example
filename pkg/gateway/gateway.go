@@ -11,6 +11,7 @@ import (
 )
 
 func Start(port int, grpcServerAddr string) {
+	log.Println("Using gRPC server on", grpcServerAddr)
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
