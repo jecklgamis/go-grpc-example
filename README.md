@@ -65,7 +65,7 @@ Client:
 $ bin/client -serverAddr localhost:4000
 ```
 
-Example run:
+Example output:
 ```
 bin/client -serverAddr localhost:4000
 2019/08/12 07:50:19 Connecting to localhost:4000
