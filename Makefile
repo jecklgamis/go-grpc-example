@@ -2,10 +2,10 @@ default:
 	cat ./Makefile
 
 .PHONY: build
-build: protos client server gateway
+build: protobufs client server gateway
 
-.PHONY: protos
-protos:
+.PHONY: protobufs
+protobufs:
 	@protoc -I. \
 	-I/usr/local/include \
 	-I/usr/local/include/google/protobuf \
