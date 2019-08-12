@@ -9,11 +9,11 @@ import (
 	"time"
 )
 
-type SomeClient struct {
+type keyValueStoreClient struct {
 	grpcClient pb.KeyValueStoreClient
 }
 
-func New(serverAddr string) *SomeClient {
+func New(serverAddr string) *keyValueStoreClient {
 	flag.Parse()
 	var opts []grpc.DialOption
 	opts = append(opts, grpc.WithInsecure())
@@ -23,12 +23,12 @@ func New(serverAddr string) *SomeClient {
 		log.Fatalf("Failed to dial: %v", err)
 	}
 	grpcClient := pb.NewKeyValueStoreClient(conn)
-	client := &SomeClient{grpcClient}
+	client := &keyValueStoreClient{grpcClient}
 	return client
 
 }
 
-func (client *SomeClient) Get(key string) (string, error) {
+func (client *keyValueStoreClient) Get(key string) (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	response, err := client.grpcClient.Get(ctx, &pb.Key{Key: key})
@@ -40,7 +40,7 @@ func (client *SomeClient) Get(key string) (string, error) {
 	return response.Value, nil
 }
 
-func (client *SomeClient) Put(key string, value string) error {
+func (client *keyValueStoreClient) Put(key string, value string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	kv := &pb.KeyValue{Key: key, Value: value}
