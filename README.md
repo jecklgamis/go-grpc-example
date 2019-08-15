@@ -62,7 +62,8 @@ Example output:
 
 Client:
 ```
-$ bin/client -serverAddr localhost:4000
+$ bin/client -serverAddr localhost:4000 put some-key some-value
+$ bin/client -serverAddr localhost:4000 get some-key
 ```
 
 Example output:

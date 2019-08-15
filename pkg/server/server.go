@@ -19,19 +19,29 @@ var server = &keyValueStoreServer{store: make(map[string]string)}
 
 func (server *keyValueStoreServer) Get(ctx context.Context, key *pb.Key) (*pb.Value, error) {
 	if key == nil {
+		log.Println("GET: Invalid key")
 		return nil, status.Errorf(codes.InvalidArgument, "Invalid key")
 	}
-	value := server.store[key.Key]
-	log.Printf("GET key=%v, value=%v\n", key.Key, value)
-	return &pb.Value{Value: value}, nil
+	v, ok := server.store[key.Key]
+	if !ok {
+		log.Printf("GET : Key not found : %v\n", key.Key)
+		return nil, status.Errorf(codes.NotFound, "Key not found")
+	}
+	log.Printf("GET : key=%v, value=%v\n", key.Key, v)
+	return &pb.Value{Value: v}, nil
 }
 
 func (server *keyValueStoreServer) Put(ctx context.Context, kv *pb.KeyValue) (*pb.Empty, error) {
 	if kv == nil {
-		log.Printf("kv is nil")
-		return &pb.Empty{}, nil
+		return &pb.Empty{}, status.Errorf(codes.InvalidArgument, "Invalid key value")
 	}
-	log.Printf("PUT key=%v, value=%v\n", kv.Key, kv.Value)
+	if kv.Key == "" {
+		return &pb.Empty{}, status.Errorf(codes.InvalidArgument, "Empty key not allowed")
+	}
+	if kv.Value == "" {
+		return &pb.Empty{}, status.Errorf(codes.InvalidArgument, "Empty value not allowed")
+	}
+	log.Printf("PUT : key=%v, value=%v\n", kv.Key, kv.Value)
 	server.store[kv.Key] = kv.Value
 	return &pb.Empty{}, nil
 }
