@@ -3,7 +3,7 @@ package gateway
 import (
 	"context"
 	"fmt"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jecklgamis/grpc-go-example/pkg/kvstore"
 	"google.golang.org/grpc"
 	"log"

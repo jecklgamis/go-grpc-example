@@ -2,13 +2,11 @@ default:
 	cat ./Makefile
 
 install-deps:
-	go install google.golang.org/protobuf/cmd/protoc-gen-go
-	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
-	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
-	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
 
 .PHONY: build
-build: protobufs client server  gateway-protobufs gateway
+build: protobufs gateway-protobufs client server gateway
 
 .PHONY: protobufs
 protobufs:
