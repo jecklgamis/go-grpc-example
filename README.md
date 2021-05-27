@@ -17,15 +17,16 @@ $ protoc --version
 libprotoc 3.7.1
 ```
 
-Install `protoc-gen-go` and related binaries
+Install `protoc-gen-go`  and related binaries
 ```
-go get -u github.com/golang/protobuf/protoc-gen-go
-go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
+go install google.golang.org/protobuf/cmd/protoc-gen-go
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
 ```
-or simply do `make get-protoc-gen-go`
+or simply do `make install-deps`
 
-Generate stub and build client, server, and gateway implementations:
+Generate stubs and build client, server, and gateway implementations:
 ```
 make build
 ```
@@ -77,8 +78,8 @@ bin/client -serverAddr localhost:4000
 ## Testing The REST EndPoints
 
 ```
-curl -v -X PUT  http://localhost:8080/v1 -d@request_body.json
-curl -v  http://localhost:8080/v1?key=some-key
+curl -X PUT  http://localhost:8080/v1 -d@request_body.json
+curl http://localhost:8080/v1?key=some-key
 ```
 
 request_body.json:

@@ -12,6 +12,7 @@ import (
 )
 
 type keyValueStoreServer struct {
+	pb.UnimplementedKeyValueStoreServer
 	store map[string]string
 }
 

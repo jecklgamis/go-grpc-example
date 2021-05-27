@@ -1,27 +1,25 @@
 default:
 	cat ./Makefile
 
+install-deps:
+	go install google.golang.org/protobuf/cmd/protoc-gen-go
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
+	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
+
 .PHONY: build
-build: protobufs client server gateway
+build: protobufs client server  gateway-protobufs gateway
 
 .PHONY: protobufs
 protobufs:
-	@protoc -I. \
-	-I/usr/local/include \
-	-I/usr/local/include/google/protobuf \
-	-I$(GOPATH)/src \
-	--go_out=plugins=grpc:. pkg/kvstore/kvstore.proto
-
-	@protoc -I. \
-	-I/usr/local/include \
-	-I/usr/local/include/google/protobuf \
+	protoc -I . \
+	--go_out=. --go_opt=paths=source_relative \
+           --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+           pkg/kvstore/kvstore.proto
+gateway-protobufs:
+	protoc -I. \
 	-I$(GOPATH)/src \
 	--grpc-gateway_out=logtostderr=true,grpc_api_configuration=pkg/kvstore/kvstore.yaml:. pkg/kvstore/kvstore.proto
-
-get-protoc-gen-go:
-	go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-	go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
-	go get -u github.com/golang/protobuf/protoc-gen-go
 
 .PHONY: server
 server:
@@ -41,3 +39,4 @@ client:
 .PHONY: clean
 clean:
 	@rm -f bin/*
+	@rm -f pkg/kvstore/*.go
