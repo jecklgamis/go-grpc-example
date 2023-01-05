@@ -18,7 +18,7 @@ update-modules:
 
 build: protobufs gateway-protobufs client server gateway
 
-all: build
+all: install-deps build
 
 .PHONY: protobufs
 protobufs:
