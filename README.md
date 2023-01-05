@@ -1,5 +1,7 @@
 ## grpc-go-example
 
+[![Build](https://github.com/jecklgamis/grpc-go-example/actions/workflows/build.yml/badge.svg)](https://github.com/jecklgamis/grpc-go-example/actions/workflows/build.yml)
+
 This is an example GRPC client, server, and gateway implementation. The server is a simple in-memory key-value store.
 
 Docker : `docker run -p 4000:4000 -it jecklgamis/grpc-go-example:main`
