@@ -12,7 +12,7 @@ jobs:
         with:
           go-version: '>=1.19.0'
       - name: Build binaries
-        run: make dist
+        run: make all
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v3

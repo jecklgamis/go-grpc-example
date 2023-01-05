@@ -16,7 +16,6 @@ update-modules:
 	go get -u ./...
 	go mod tidy
 
-.PHONY: build
 build: protobufs gateway-protobufs client server gateway
 
 all: build
@@ -36,6 +35,7 @@ LD_FLAGS:="-X github.com/jecklgamis/go-api-server-example/pkg/version.BuildVersi
 		  -X github.com/jecklgamis/grpc-go-example/pkg/version.BuildBranch=$(BUILD_BRANCH)"
 
 server: server-linux-amd64
+	@echo "Building $@"
 	go build -o bin/server cmd/server/server.go
 	@chmod +x bin/server
 
@@ -45,6 +45,7 @@ server-linux-amd64:
 	@chmod +x bin/server-linux-amd64
 
 gateway: gateway-linux-amd64
+	@echo "Building $@"
 	go build -o bin/gateway cmd/gateway/gateway.go
 	@chmod +x bin/gateway
 
@@ -54,6 +55,7 @@ gateway-linux-amd64:
 	@chmod +x bin/gateway-linux-amd64
 
 client: client-linux-amd64
+	@echo "Building $@"
 	go build -o bin/client cmd/client/client.go
 	@chmod +x bin/client
 
