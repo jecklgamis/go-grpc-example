@@ -72,7 +72,7 @@ up: build image run
 image:
 	@docker build -t $(IMAGE_NAME)/$(IMAGE_TAG) .
 run:
-	@docker run -p 4000:4000 -it $(IMAGE_NAME)/$(IMAGE_TAG)
+	@docker run -p 4000:4000 -e SERVER_PORT=4000 -it $(IMAGE_NAME)/$(IMAGE_TAG)
 run-shell:
 	@docker run -i -t $(IMAGE_NAME)/$(IMAGE_TAG) /bin/bash
 exec-shell:
