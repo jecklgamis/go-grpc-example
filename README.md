@@ -32,6 +32,8 @@ or simply do `make install-deps`
 
 Generate stubs and build client, server, and gateway implementations:
 ```
+
+```
 make build
 ```
 
