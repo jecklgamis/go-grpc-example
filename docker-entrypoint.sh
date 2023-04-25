@@ -1,3 +1,2 @@
 #!/bin/bash
-SERVER_PORT=${SERVER_PORT:-4000}
-cd /app && bin/server --port $SERVER_PORT
+/usr/local/bin/supervisord -c /etc/supervisor.d/supervisor.ini
