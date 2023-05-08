@@ -6,6 +6,7 @@ import (
 	pb "github.com/jecklgamis/grpc-go-example/pkg/kvstore"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 	"log"
 	"net"
@@ -53,6 +54,7 @@ func Start(port int) {
 		log.Fatalf("Failed to listen: %v", err)
 	}
 	grpcServer := grpc.NewServer()
+	reflection.Register(grpcServer)
 	pb.RegisterKeyValueStoreServer(grpcServer, server)
 	log.Println("Started server on port", port)
 	if err = grpcServer.Serve(listener); err != nil {
