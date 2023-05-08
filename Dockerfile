@@ -19,7 +19,7 @@ COPY docker-entrypoint.sh /
 RUN chown -R app:app ${APP_HOME}
 RUN chmod +x /docker-entrypoint.sh
 
-EXPOSE 4040
+EXPOSE 4000
 EXPOSE 8080
 
 WORKDIR ${APP_HOME}
