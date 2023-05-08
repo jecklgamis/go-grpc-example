@@ -2,9 +2,12 @@ package client
 
 import (
 	"context"
+	"crypto/tls"
 	"flag"
 	pb "github.com/jecklgamis/grpc-go-example/pkg/kvstore"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	"time"
 )
@@ -13,10 +16,17 @@ type keyValueStoreClient struct {
 	grpcClient pb.KeyValueStoreClient
 }
 
-func New(serverAddr string) *keyValueStoreClient {
+func New(serverAddr string, ssl bool) *keyValueStoreClient {
 	flag.Parse()
 	var opts []grpc.DialOption
-	opts = append(opts, grpc.WithInsecure())
+	if ssl {
+		config := &tls.Config{
+			InsecureSkipVerify: true,
+		}
+		opts = append(opts, grpc.WithTransportCredentials(credentials.NewTLS(config)))
+	} else {
+		opts = append(opts, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	}
 	conn, err := grpc.Dial(serverAddr, opts...)
 	if err != nil {
 		log.Fatalf("Failed to dial: %v", err)

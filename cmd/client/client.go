@@ -10,6 +10,7 @@ import (
 
 var (
 	serverAddr = flag.String("serverAddr", "localhost:4000", "The server address")
+	ssl        = flag.Bool("ssl", false, "Enable SSL")
 )
 
 func printUsageAndExit() {
@@ -30,7 +31,7 @@ func main() {
 			os.Exit(-1)
 		}
 		k := flag.Args()[1]
-		v, _ := client.New(*serverAddr).Get(k)
+		v, _ := client.New(*serverAddr, *ssl).Get(k)
 		if v != "" {
 			println(v)
 		}
@@ -41,7 +42,7 @@ func main() {
 		}
 		k := flag.Args()[1]
 		v := flag.Args()[2]
-		err := client.New(*serverAddr).Put(k, v)
+		err := client.New(*serverAddr, *ssl).Put(k, v)
 		if err != nil {
 			log.Fatal(err)
 		}
