@@ -61,7 +61,7 @@ client-linux-amd64:
 clean:
 	@rm -f bin/*
 	@rm -f pkg/kvstore/*.go
-all: install-deps build image
+all: build image
 
 image:
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .

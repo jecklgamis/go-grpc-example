@@ -27,7 +27,7 @@ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
 go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
 go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
-``
+```
 or simply do `make install-deps`
 
 Generate stubs and build client, server, and gateway implementations:
