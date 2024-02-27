@@ -13,9 +13,7 @@ jobs:
         with:
           go-version: '>=1.22'
       - name: Install dependencies
-        uses: make install-deps
-        with:
-          version: '3.x'
+        run: make install-deps
       - name: Build binaries
         run: make all
       - name: Extract metadata (tags, labels) for Docker
