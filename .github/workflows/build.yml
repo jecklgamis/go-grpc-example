@@ -12,8 +12,8 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: '>=1.22'
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v1
+      - name: Install dependencies
+        uses: make install-deps
         with:
           version: '3.x'
       - name: Build binaries
