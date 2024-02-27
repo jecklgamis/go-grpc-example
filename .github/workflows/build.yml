@@ -13,7 +13,7 @@ jobs:
         with:
           go-version: '>=1.22'
       - name: Install Protoc
-        uses: arduino/setup-protoc@v3`
+        uses: arduino/setup-protoc@v3
       - name: Install dependencies
         run: make install-deps
       - name: Build binaries
