@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/jecklgamis/grpc-go-example/pkg/gateway"
+	"github.com/jecklgamis/go-grpc-example/pkg/gateway"
 )
 
 var (

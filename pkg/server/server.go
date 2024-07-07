@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
-	pb "github.com/jecklgamis/grpc-go-example/pkg/kvstore"
+	pb "github.com/jecklgamis/go-grpc-example/pkg/kvstore"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"

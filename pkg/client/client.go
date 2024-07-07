@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"flag"
-	pb "github.com/jecklgamis/grpc-go-example/pkg/kvstore"
+	pb "github.com/jecklgamis/go-grpc-example/pkg/kvstore"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"

@@ -1,12 +1,12 @@
-IMAGE_NAME:=jecklgamis/grpc-go-example
+IMAGE_NAME:=go-grpc-example
 IMAGE_TAG:=main
 
 BUILD_BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 BUILD_VERSION:=$(shell git rev-parse HEAD)
 BUILD_OS:=darwin
 BUILD_ARCH:=amd64
-LD_FLAGS:="-X github.com/jecklgamis/grpc-go-example/pkg/version.BuildVersion=$(BUILD_VERSION) \
-		  -X github.com/jecklgamis/grpc-go-example/pkg/version.BuildBranch=$(BUILD_BRANCH)"
+LD_FLAGS:="-X github.com/jecklgamis/go-grpc-example/pkg/version.BuildVersion=$(BUILD_VERSION) \
+		  -X github.com/jecklgamis/go-grpc-example/pkg/version.BuildBranch=$(BUILD_BRANCH)"
 
 default:
 	cat ./Makefile

@@ -1,4 +1,4 @@
-module github.com/jecklgamis/grpc-go-example
+module github.com/jecklgamis/go-grpc-example
 
 go 1.12
 

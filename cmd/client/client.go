@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/jecklgamis/grpc-go-example/pkg/client"
+	"github.com/jecklgamis/go-grpc-example/pkg/client"
 	"log"
 	"os"
 )
