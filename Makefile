@@ -3,8 +3,6 @@ IMAGE_TAG:=main
 
 BUILD_BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 BUILD_VERSION:=$(shell git rev-parse HEAD)
-BUILD_OS:=darwin
-BUILD_ARCH:=amd64
 LD_FLAGS:="-X github.com/jecklgamis/go-grpc-example/pkg/version.BuildVersion=$(BUILD_VERSION) \
 		  -X github.com/jecklgamis/go-grpc-example/pkg/version.BuildBranch=$(BUILD_BRANCH)"
 
@@ -19,7 +17,7 @@ install-deps:
 
 
 .PHONY: build
-build: protobufs gateway-protobufs client-$(BUILD_OS)-$(BUILD_ARCH) server-$(BUILD_OS)-$(BUILD_ARCH) gateway-$(BUILD_OS)-$(BUILD_ARCH)
+build: protobufs gateway-protobufs client server gateway
 
 .PHONY: protobufs
 protobufs:
@@ -33,7 +31,8 @@ gateway-protobufs:
 	--grpc-gateway_out=logtostderr=true,grpc_api_configuration=pkg/kvstore/kvstore.yaml:. pkg/kvstore/kvstore.proto
 
 .PHONY: server
-server-$(BUILD_OS)-$(BUILD_ARCH): server-linux-amd64
+server: server-linux-amd64
+	@echo "Building $@"
 	@go build -o bin/$@ cmd/server/server.go
 	@chmod +x bin/$@
 server-linux-amd64:
@@ -41,7 +40,8 @@ server-linux-amd64:
 	@GOOS=linux GOARCH=amd64 go build -ldflags $(LD_FLAGS) -o bin/$@ cmd/server/server.go
 	@chmod +x bin/$@
 .PHONY: gateway
-gateway-$(BUILD_OS)-$(BUILD_ARCH): gateway-linux-amd64
+gateway: gateway-linux-amd64
+	@echo "Building $@"
 	@go build -o bin/$@ cmd/gateway/gateway.go
 	@chmod +x bin/$@
 gateway-linux-amd64:
@@ -50,7 +50,8 @@ gateway-linux-amd64:
 	@chmod +x bin/$@
 
 .PHONY: client
-client-$(BUILD_OS)-$(BUILD_ARCH): client-linux-amd64
+client: client-linux-amd64
+	@echo "Building $@"
 	go build -o bin/$@ cmd/client/client.go
 	@chmod +x bin/$@
 client-linux-amd64:
