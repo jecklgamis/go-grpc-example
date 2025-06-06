@@ -7,14 +7,18 @@ LD_FLAGS:="-X github.com/jecklgamis/go-grpc-example/pkg/version.BuildVersion=$(B
 		  -X github.com/jecklgamis/go-grpc-example/pkg/version.BuildBranch=$(BUILD_BRANCH)"
 
 default:
-	cat ./Makefile
+	@echo "Make targets:"
+	@echo "make build - build binaries"
+	@echo "make image - build Docker image"
+	@echo "make run - run Docker image"
 
 install-deps:
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
-
+update-deps:
+	go get -u ./...
 
 .PHONY: build
 build: protobufs gateway-protobufs client server gateway
