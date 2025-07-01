@@ -13,11 +13,13 @@ jobs:
         with:
           go-version: '>=1.22.0'
       - name: Install Protoc
-        run: go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v3
-        with:
-          version: '23.x'
+        run: |
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/internal/descriptor
       - name: Build binaries
         run: make all
       - name: Extract metadata (tags, labels) for Docker
