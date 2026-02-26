@@ -24,11 +24,16 @@ make client
 make protobufs         # generates kvstore.pb.go and kvstore_grpc.pb.go
 make gateway-protobufs # generates kvstore.pb.gw.go
 
-# Clean generated files and binaries
+# Clean generated files and binaries (removes bin/* AND pkg/kvstore/*.go)
 make clean
+
+# Update all Go dependencies
+make update-deps
 ```
 
 The generated files in `pkg/kvstore/` (`*.pb.go`, `*.pb.gw.go`, `*_grpc.pb.go`) are derived from `pkg/kvstore/kvstore.proto` — do not edit them manually.
+
+There are no tests in this repository.
 
 ## Running
 
@@ -49,8 +54,9 @@ curl -X PUT http://localhost:8080/v1 -d '{"key":"k","value":"v"}'
 curl "http://localhost:8080/v1?key=k"
 
 # Docker
-make image  # builds Docker image (requires binaries already built via make build)
-make run    # runs container exposing ports 4000 and 8080
+make image     # builds Docker image (requires binaries already built via make build)
+make run       # runs container exposing ports 4000 and 8080
+make run-bash  # opens a shell in the container
 ```
 
 ## Architecture
@@ -75,6 +81,13 @@ pkg/
 - HTTP routing rules (GET /v1, PUT /v1) are configured in `pkg/kvstore/kvstore.yaml`, not annotations in the proto file
 
 **Proto compilation** requires both `protoc` (system) and Go plugins (`protoc-gen-go`, `protoc-gen-go-grpc`, `protoc-gen-grpc-gateway`). The two `make protobufs` targets must be run separately because they use different protoc invocations.
+
+**Build output:** `make build` produces both a native binary (e.g. `bin/server`) and a cross-compiled `linux/amd64` binary (e.g. `bin/server-linux-amd64`) for each component. The linux binaries are what the Docker image uses.
+
+**Notable implementation details:**
+- The in-memory store (`pkg/server/server.go`) uses a plain `map[string]string` with no mutex — not safe for concurrent writes
+- TLS mode on the client (`-ssl` flag) uses `InsecureSkipVerify: true` — suitable only for testing
+- `pkg/version` exposes `BuildVersion`/`BuildBranch` vars injected via `-ldflags` at build time (only for the linux-amd64 targets)
 
 ## Dependencies
 
