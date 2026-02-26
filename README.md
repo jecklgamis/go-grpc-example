@@ -1,6 +1,6 @@
 ## go-grpc-example
 
-[![Build](https://github.com/jecklgamis/go-grpc-example/actions/workflows/build.yml/badge.svg)](https://github.com/jecklgamis/go-grpc-example/actions/workflows/build.yml)
+[![Build](https://github.com/jecklgamis/go-grpc-example/actions/workflows/build.yaml/badge.svg)](https://github.com/jecklgamis/go-grpc-example/actions/workflows/build.yaml)
 
 This is an example GRPC client, server, and gateway implementation. The server is a simple in-memory key-value store.
 
@@ -21,28 +21,14 @@ $ protoc --version
 libprotoc 3.7.1
 ```
 
-Install `protoc-gen-go`  and related binaries
+Install protoc plugins:
 ```
-go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
-go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
-go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2
+make install-deps
 ```
-or simply do `make install-deps`
 
 Generate stubs and build client, server, and gateway implementations:
 ```
-
-```
 make build
-```
-
-Example run:
-```
-$ make build
-go build -o bin/client cmd/client/client.go
-go build -o bin/server cmd/server/server.go
-go build -o bin/gateway cmd/gateway/gateway.go
 ```
 
 ## Running 

@@ -91,6 +91,7 @@ pkg/
 
 ## Dependencies
 
+- Go 1.26+
 - `google.golang.org/grpc` — gRPC runtime
 - `google.golang.org/protobuf` — protobuf runtime
 - `github.com/grpc-ecosystem/grpc-gateway/v2` — REST-to-gRPC gateway
