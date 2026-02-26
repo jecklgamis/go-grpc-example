@@ -1,9 +1,7 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 LABEL org.opencontainers.image.authors="jecklgamis@gmail.com"
 
-RUN apt update -y && apt install -y golang python3 python3-pip dumb-init && rm -rf /var/lib/apt/lists/*
-COPY requirements.txt /
-RUN pip install --upgrade pip &&  pip install -r /requirements.txt
+RUN apt update -y && apt install -y golang supervisor dumb-init && rm -rf /var/lib/apt/lists/*
 
 COPY supervisor.ini /etc/supervisor.d/
 RUN mkdir -p /var/log/supervisor
