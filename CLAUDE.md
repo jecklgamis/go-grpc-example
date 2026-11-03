@@ -85,7 +85,7 @@ pkg/
 **Build output:** `make build` produces both a native binary (e.g. `bin/server`) and a cross-compiled `linux/amd64` binary (e.g. `bin/server-linux-amd64`) for each component. The linux binaries are what the Docker image uses.
 
 **Notable implementation details:**
-- The in-memory store (`pkg/server/server.go`) uses a plain `map[string]string` with no mutex — not safe for concurrent writes
+- The in-memory store (`pkg/server/server.go`) uses a `map[string]string` guarded by a `sync.RWMutex`
 - TLS mode on the client (`-ssl` flag) uses `InsecureSkipVerify: true` — suitable only for testing
 - `pkg/version` exposes `BuildVersion`/`BuildBranch` vars injected via `-ldflags` at build time (only for the linux-amd64 targets)
 

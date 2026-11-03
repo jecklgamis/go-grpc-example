@@ -10,10 +10,12 @@ import (
 	"google.golang.org/grpc/status"
 	"log"
 	"net"
+	"sync"
 )
 
 type keyValueStoreServer struct {
 	pb.UnimplementedKeyValueStoreServer
+	mu    sync.RWMutex
 	store map[string]string
 }
 
@@ -24,7 +26,9 @@ func (server *keyValueStoreServer) Get(ctx context.Context, key *pb.Key) (*pb.Va
 		log.Println("GET: Invalid key")
 		return nil, status.Errorf(codes.InvalidArgument, "Invalid key")
 	}
+	server.mu.RLock()
 	v, ok := server.store[key.Key]
+	server.mu.RUnlock()
 	if !ok {
 		log.Printf("GET : Key not found : %v\n", key.Key)
 		return nil, status.Errorf(codes.NotFound, "Key not found")
@@ -44,7 +48,9 @@ func (server *keyValueStoreServer) Put(ctx context.Context, kv *pb.KeyValue) (*p
 		return &pb.Empty{}, status.Errorf(codes.InvalidArgument, "Empty value not allowed")
 	}
 	log.Printf("PUT : key=%v, value=%v\n", kv.Key, kv.Value)
+	server.mu.Lock()
 	server.store[kv.Key] = kv.Value
+	server.mu.Unlock()
 	return &pb.Empty{}, nil
 }
 
