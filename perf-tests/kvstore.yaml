@@ -1,0 +1,43 @@
+# Load test for the key-value store gRPC service (kvstore.KeyValueStore).
+#
+# Run (server must be up on port 4000, e.g. `go run cmd/server/server.go -port 4000`):
+#   resonate run perf-tests/kvstore.yaml
+# Each iteration is two requests (a Put, then a Get of the same key), so the
+# report's request rate is about twice the iteration rate set below.
+protocol: grpc
+
+load:
+  stages:
+    # Ramp up: 0 -> 50 workers / 100 iterations/sec over 15s.
+    - duration: 15s
+      workers: 50
+      rate: 100
+    # Steady state for 1 minute.
+    - duration: 1m
+      workers: 50
+      rate: 100
+    # Ramp down to 0 over 10s.
+    - duration: 10s
+      workers: 0
+      rate: 0
+
+grpc:
+  address: localhost:4000
+  plaintext: true          # the server speaks no TLS
+  timeout: 5s
+  # The server has gRPC reflection enabled, so no .proto file is needed.
+  calls:
+    - method: kvstore.KeyValueStore/Put
+      # {{.Seq}} is constant within an iteration, so the Get below reads back
+      # the key this Put just wrote. Keys accumulate in the server's memory.
+      message: '{"key":"perf-{{.Seq}}","value":"{{uuid}}"}'
+    - method: kvstore.KeyValueStore/Get
+      message: '{"key":"perf-{{.Seq}}"}'
+      expect_body:
+        json:value: ""     # the value must be present
+
+assertions:
+  - metric: success_rate
+    min: "0.99"
+  - metric: latency_p95
+    max: 200ms

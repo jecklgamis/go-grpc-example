@@ -82,4 +82,12 @@ request_body.json:
 }
 ```
 
+## Load Testing
 
+Load tests use [resonate](https://github.com/jecklgamis/resonate). With the server running on port 4000:
+
+```bash
+brew install jecklgamis/tap/resonate
+./run-perf-tests.sh
+```
+See [perf-tests](perf-tests) for the scenarios and details.

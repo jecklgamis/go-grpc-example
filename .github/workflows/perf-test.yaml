@@ -1,0 +1,40 @@
+name: Perf Test
+on:
+  workflow_dispatch:
+jobs:
+  perf-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v7
+      - name: Set up Go (for the server)
+        uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.26.0'
+      - name: Install Protoc
+        run: |
+          sudo apt-get update -y && sudo apt-get install -y protobuf-compiler
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+      - name: Generate protobufs
+        run: |
+          export PATH="$(go env GOPATH)/bin:$PATH"
+          make protobufs
+      - name: Install resonate
+        run: go install github.com/jecklgamis/resonate/cmd/resonate@latest
+      - name: Start app
+        run: |
+          nohup go run cmd/server/server.go -port 4000 > app.log 2>&1 &
+          for i in $(seq 1 90); do (echo > /dev/tcp/localhost/4000) 2>/dev/null && break; sleep 1; done
+      - name: Run load test
+        run: |
+          export PATH="$(go env GOPATH)/bin:$PATH"
+          ./run-perf-tests.sh
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-test-report
+          path: perf-tests/*-report.*
